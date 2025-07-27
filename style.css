@@ -7,6 +7,7 @@
     --light-nav-bg: rgba(255, 255, 255, 0.1);
     --light-form-bg: #ffffff;
     --light-form-border: #d1d5db;
+    --light-modal-overlay: rgba(31, 41, 55, 0.5);
 
     --dark-bg: #111827;
     --dark-text: #e5e7eb;
@@ -15,6 +16,7 @@
     --dark-nav-bg: rgba(17, 24, 39, 0.2);
     --dark-form-bg: #374151;
     --dark-form-border: #4b5563;
+    --dark-modal-overlay: rgba(0, 0, 0, 0.7);
 
     --accent-color: #06b6d4; /* Cyan */
     --accent-hover: #0891b2;
@@ -200,6 +202,9 @@ body.dark #home.animated-gradient-light {
 .btn-primary {
     background-color: var(--accent-color);
     color: white;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    
 }
 .btn-primary:hover {
     background-color: var(--accent-hover);
@@ -245,6 +250,7 @@ body.dark .project-card {
     width: 100%;
     height: 220px;
     object-fit: cover;
+    
 }
 .project-card-content {
     padding: 1.5rem;
@@ -312,9 +318,16 @@ body.dark .contact-form input, body.dark .contact-form textarea {
     box-shadow: 0 0 0 2px rgba(6, 182, 212, 0.3);
 }
 .contact-form .btn {
+    
     width: 100%;
     border: none;
     cursor: pointer;
+    font-size: 1rem; 
+    padding-top: 1rem; 
+    padding-bottom: 1rem; 
+    text-transform: uppercase; 
+    letter-spacing: 0.05em; 
+    font-weight: 700; 
 }
 
 /* Footer */
@@ -327,6 +340,98 @@ body.dark footer {
     background-color: var(--dark-bg);
     color: #9ca3af;
 }
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--light-modal-overlay);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+body.dark .modal-overlay {
+    background-color: var(--dark-modal-overlay);
+}
+.modal-overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+.modal-content {
+    background-color: var(--light-card-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transform: translateY(-20px);
+    transition: transform 0.3s ease;
+}
+body.dark .modal-content {
+    background-color: var(--dark-card-bg);
+}
+.modal-overlay.open .modal-content {
+    transform: translateY(0);
+}
+.modal-close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 2rem;
+    line-height: 1;
+    font-weight: 300;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--light-text);
+}
+body.dark .modal-close-btn {
+    color: var(--dark-text);
+}
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+.profiles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.profile-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--light-form-border);
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--light-text);
+    transition: background-color 0.2s;
+}
+body.dark .profile-link {
+    border-color: var(--dark-form-border);
+    color: var(--dark-text);
+}
+.profile-link:hover {
+    background-color: var(--light-bg);
+}
+body.dark .profile-link:hover {
+    background-color: var(--dark-form-bg);
+}
+.profile-icon {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
 
 /* Responsive Design */
 @media (max-width: 768px) {
