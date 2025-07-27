@@ -201,10 +201,7 @@ body.dark #home.animated-gradient-light {
 }
 .btn-primary {
     background-color: var(--accent-color);
-    color: white;
-    padding-bottom: 10px;
-    padding-top: 10px;
-    
+    color: white;   
 }
 .btn-primary:hover {
     background-color: var(--accent-hover);
