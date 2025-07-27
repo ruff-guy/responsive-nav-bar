@@ -5,6 +5,12 @@
     const mobileMenuBtn = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const body = document.body;
+    
+    // Modal-specific elements
+    const openModalBtn = document.getElementById('open-profiles-modal');
+    const closeModalBtn = document.getElementById('close-profiles-modal');
+    const profilesModal = document.getElementById('profiles-modal');
+
 
     // --- Theme Toggling Logic ---
     /**
@@ -39,6 +45,25 @@
     mobileMenu.addEventListener('click', (e) => {
         if (e.target.tagName === 'A') {
             mobileMenu.classList.remove('open');
+        }
+    });
+
+    // --- Profiles Modal Logic ---
+    // Open the modal when the 'Explore Profiles' link is clicked.
+    openModalBtn.addEventListener('click', () => {
+        profilesModal.classList.add('open');
+    });
+
+    // Close the modal when the close button (x) is clicked.
+    closeModalBtn.addEventListener('click', () => {
+        profilesModal.classList.remove('open');
+    });
+
+    // Close the modal if the user clicks on the dark overlay area.
+    profilesModal.addEventListener('click', (e) => {
+        // Check if the clicked element is the overlay itself, not the content inside it.
+        if (e.target === profilesModal) {
+            profilesModal.classList.remove('open');
         }
     });
 
