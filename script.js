@@ -5,6 +5,10 @@
     const mobileMenuBtn = document.getElementById('mobile-menu-button');
     const mobileMenu = document.getElementById('mobile-menu');
     const body = document.body;
+
+    // New form-specific elements
+    const contactForm = document.getElementById('contact-form');
+    const formStatus = document.getElementById('form-status');
     
     // Modal-specific elements
     const openModalBtn = document.getElementById('open-profiles-modal');
@@ -49,6 +53,59 @@
     });
 
     // --- Profiles Modal Logic ---
+     // --- New Contact Form Logic ---
+    /**
+     * Handles the contact form submission asynchronously.
+     * @param {Event} event - The form submission event.
+     */
+    async function handleFormSubmit(event) {
+        event.preventDefault(); // Prevent the default page reload
+        const form = event.target;
+        const data = new FormData(form);
+        
+        try {
+            // Use fetch to send the form data to Formspree
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                // If submission is successful
+                formStatus.textContent = "Thanks for your message! I'll get back to you soon.";
+                formStatus.className = 'success';
+                form.reset(); // Clear the form fields
+            } else {
+                // If there's a server-side error
+                const responseData = await response.json();
+                if (Object.hasOwn(responseData, 'errors')) {
+                    formStatus.textContent = responseData["errors"].map(error => error["message"]).join(", ");
+                } else {
+                    formStatus.textContent = "Oops! There was a problem submitting your form.";
+                }
+                formStatus.className = 'error';
+            }
+        } catch (error) {
+            // If there's a network error
+            formStatus.textContent = "Oops! There was a problem submitting your form.";
+            formStatus.className = 'error';
+        }
+        
+        // Make the status message visible
+        formStatus.style.display = 'block';
+
+        // Hide the message after a few seconds
+        setTimeout(() => {
+            formStatus.style.display = 'none';
+        }, 6000);
+    }
+
+    // Attach the submission handler to the form's submit event
+    contactForm.addEventListener("submit", handleFormSubmit);
+
     // Open the modal when the 'Explore Profiles' link is clicked.
     openModalBtn.addEventListener('click', () => {
         profilesModal.classList.add('open');
